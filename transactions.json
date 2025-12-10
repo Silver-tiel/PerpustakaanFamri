@@ -1,0 +1,17 @@
+{
+    "peminjaman": [],
+    "pengembalian": [
+        {
+            "id": 1765330312,
+            "user_id": 1765330271000,
+            "nama": "Irzal Amru Alqahtani",
+            "book_id": 3,
+            "book_title": "Atomic Habits",
+            "tanggalPinjam": "2025-12-10",
+            "jatuhTempo": "2025-12-17",
+            "status": "Dikembalikan",
+            "tanggalPengembalian": "2025-12-10",
+            "denda": 0
+        }
+    ]
+}
