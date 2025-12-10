@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "nama": "admin",
+            "email": "admin@perpustakaan.com",
+            "status": "Administrator",
+            "password": "admin123",
+            "isAdmin": true,
+            "tanggalDaftar": "2025-12-04"
+        },
+        {
+            "id": 1765330271000,
+            "nama": "Irzal Amru Alqahtani",
+            "email": "irzalamru83@gmail.com",
+            "status": "Mahasiswa",
+            "password": "123456",
+            "isAdmin": false,
+            "tanggalDaftar": "2025-12-10"
+        }
+    ]
+}

@@ -1,0 +1,64 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "title": "Laskar Pelangi",
+            "author": "Andrea Hirata",
+            "year": 2005,
+            "description": "Novel tentang kehidupan anak-anak sekolah di Pulau Belitong yang berjuang meraih impian mereka.",
+            "cover": "foto buku/laskar pelangi.jpg",
+            "quantity": 5,
+            "isbn": "978-979-3062-78-4",
+            "publisher": "Bentang Pustaka",
+            "category": "Fiksi"
+        },
+        {
+            "id": 2,
+            "title": "Bumi",
+            "author": "Tere Liye",
+            "year": 2014,
+            "description": "Serial Bumi adalah kisah petualangan seorang gadis yang menemukan dunia bawah tanah penuh misteri.",
+            "cover": "foto buku/bumi tereliye.jpg",
+            "quantity": 3,
+            "isbn": "978-602-8943-69-3",
+            "publisher": "Gramedia Pustaka Utama",
+            "category": "Fiksi"
+        },
+        {
+            "id": 3,
+            "title": "Atomic Habits",
+            "author": "James Clear",
+            "year": 2018,
+            "description": "Buku tentang cara membangun kebiasaan baik dan menghilangkan kebiasaan buruk melalui perubahan kecil yang konsisten.",
+            "cover": "foto buku/Atomic Habits.jpg",
+            "quantity": 7,
+            "isbn": "978-0-735-21141-0",
+            "publisher": "Avery",
+            "category": "Self-Help"
+        },
+        {
+            "id": 4,
+            "title": "The Hobbit",
+            "author": "J.R.R. Tolkien",
+            "year": 1937,
+            "description": "Petualangan Bilbo Baggins yang terpilih untuk bergabung dengan para kurcaci dalam misi berbahaya.",
+            "cover": "foto buku/The hobbit.jpg",
+            "quantity": 4,
+            "isbn": "978-0-547-92807-6",
+            "publisher": "Houghton Mifflin Harcourt",
+            "category": "Fantasy"
+        },
+        {
+            "id": 5,
+            "title": "Sapiens",
+            "author": "Yuval Noah Harari",
+            "year": 2014,
+            "description": "Sejarah singkat manusia dari era Stone Age hingga era modern yang mengubah cara kita memahami peradaban.",
+            "cover": "foto buku/Sappiens.jpg",
+            "quantity": 6,
+            "isbn": "978-0-062-31657-1",
+            "publisher": "Harper",
+            "category": "Non-Fiksi"
+        }
+    ]
+}
