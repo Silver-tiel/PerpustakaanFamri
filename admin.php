@@ -19,7 +19,7 @@ if (!isAdmin()) {
         <div class="content">
             <h1>⛔ Akses Ditolak</h1>
             <p>Hanya admin yang dapat mengakses halaman ini.</p>
-            <a href="dashboard.php">Kembali ke Dashboard</a>
+            <a href="index.php">Kembali ke Dashboard</a>
         </div>
     </body>
     </html>
@@ -41,7 +41,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $year = (int)$_POST['year'];
         $quantity = (int)$_POST['quantity'];
         $description = $_POST['description'];
-        $cover = $_POST['cover'];
+        $coverPath = $_POST['existing_cover'] ?? ''; // Default to existing if available
+
+        // Handle File Upload
+        if (isset($_FILES['cover']) && $_FILES['cover']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['cover']['tmp_name'];
+            $fileName = $_FILES['cover']['name'];
+            $fileSize = $_FILES['cover']['size'];
+            $fileType = $_FILES['cover']['type'];
+            $fileNameCmps = explode(".", $fileName);
+            $fileExtension = strtolower(end($fileNameCmps));
+
+            $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg', 'heic', 'webp');
+            if (in_array($fileExtension, $allowedfileExtensions)) {
+                // Generate unique name
+                $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                $uploadFileDir = 'foto buku/';
+                $dest_path = $uploadFileDir . $newFileName;
+
+                if (!is_dir($uploadFileDir)) {
+                    mkdir($uploadFileDir, 0755, true);
+                }
+
+                if(move_uploaded_file($fileTmpPath, $dest_path)) {
+                    $coverPath = $dest_path;
+                } else {
+                    setFlashMessage('error', 'Gagal mengupload gambar, silakan coba lagi.');
+                    // If add, might want to stop? For now proceed with empty cover or handle error
+                }
+            } else {
+                 setFlashMessage('error', 'Format file tidak didukung. Gunakan JPG, PNG, HEIC, GIF, atau WEBP.');
+            }
+        }
         
         $newBook = [
             'id' => ($action === 'update') ? (int)$_POST['id'] : time(),
@@ -50,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'year' => $year,
             'quantity' => $quantity,
             'description' => $description,
-            'cover' => $cover,
+            'cover' => $coverPath,
             // Preserve existing fields if update, or defaults
             'isbn' => $_POST['isbn'] ?? '-',
             'publisher' => $_POST['publisher'] ?? '-',
@@ -166,7 +197,7 @@ $flash = getFlashMessage();
 <nav class="navbar">
     <div class="logo">Perpustakaan FAMRI Admin</div>
     <div class="nav-links">
-        <a href="dashboard.php">Beranda</a>
+        <a href="index.php">Beranda</a>
         <a href="logout.php">Logout</a>
     </div>
 </nav>
@@ -202,7 +233,7 @@ $flash = getFlashMessage();
         <!-- ADD/EDIT BOOK -->
         <div id="add-book" class="tab-content <?= $activeTab==='add-book'?'active':'' ?>">
             <h1><?= $editBook ? 'Edit Buku' : 'Tambah Buku Baru' ?></h1>
-            <form method="POST" action="admin.php">
+            <form method="POST" action="admin.php" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="<?= $editBook ? 'update' : 'add' ?>">
                 <?php if ($editBook): ?>
                     <input type="hidden" name="id" value="<?= $editBook['id'] ?>">
@@ -229,8 +260,15 @@ $flash = getFlashMessage();
                     <textarea name="description" rows="4" required><?= $editBook['description'] ?? '' ?></textarea>
                 </div>
                 <div class="form-group">
-                    <label>URL Cover</label>
-                    <input type="url" name="cover" required value="<?= $editBook['cover'] ?? '' ?>">
+                    <label>Cover Buku (Wajib Upload Foto)</label>
+                    <?php if ($editBook && !empty($editBook['cover'])): ?>
+                        <div style="margin-bottom: 10px;">
+                            <img src="<?= htmlspecialchars($editBook['cover']) ?>" alt="Cover Saat Ini" style="height: 100px; border-radius: 5px;">
+                            <p style="font-size: 0.8em; color: #666;">Cover saat ini (biarkan kosong jika tidak ingin mengubah)</p>
+                            <input type="hidden" name="existing_cover" value="<?= htmlspecialchars($editBook['cover']) ?>">
+                        </div>
+                    <?php endif; ?>
+                    <input type="file" name="cover" accept="image/*" <?= $editBook ? '' : 'required' ?>>
                 </div>
 
                 <button type="submit" class="btn-primary"><?= $editBook ? 'Simpan Perubahan' : 'Tambah Buku' ?></button>

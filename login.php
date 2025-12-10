@@ -2,7 +2,7 @@
 require 'functions.php';
 
 if (isLoggedIn()) {
-    redirect('dashboard.php');
+    redirect('index.php');
 }
 
 $error = '';
@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     if (empty($nama) || empty($password)) {
-        $error = "❌ Nama dan password wajib diisi!";
+        $error = "Nama dan password wajib diisi!";
     } else {
         $data = loadData();
         $users = $data['users'];
@@ -28,14 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($found) {
             $_SESSION['user'] = $found;
-            setFlashMessage('success', "✅ Login berhasil! Selamat datang " . $found['nama']);
-            redirect('dashboard.php');
+            setFlashMessage('success', " Login berhasil! Selamat datang " . $found['nama']);
+            redirect('index.php');
         } else {
-            $error = "❌ Nama atau password salah!";
+            $error = " Nama atau password salah!";
             // Optional: Check if user exists for specific error message similar to JS version
             foreach ($users as $user) {
                 if ($user['nama'] === $nama) {
-                    $error = "❌ Password salah!";
+                    $error = " Password salah!";
                     break;
                 }
             }
